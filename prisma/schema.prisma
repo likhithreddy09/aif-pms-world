@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  createdAt    DateTime @default(now())
+}
+
+model Category {
+  id        String                   @id @default(cuid())
+  name      String                   @unique
+  slug      String                   @unique
+  managers  AssetManagerCategory[]
+  createdAt DateTime                 @default(now())
+}
+
+model AssetManager {
+  id        String @id @default(cuid())
+  name      String
+  slug      String @unique
+  displayName String?
+
+  logoUrl        String?
+  coverImageUrl  String?
+  description    String
+  type           String
+  websiteUrl     String?
+
+  contactPerson String?
+  contactEmail  String?
+  contactPhone  String?
+  address       String?
+
+  sebiRegistrationNumber String?
+  registrationType       String?
+  licenseDocumentUrl     String?
+  licenseValidity        DateTime?
+
+  strategyName          String?
+  investmentPhilosophy  String?
+  investmentApproach    String?
+  riskProfile           String?
+  minimumInvestment     String?
+  lockInPeriod          String?
+
+  inceptionDate DateTime?
+  aum           String?
+  clientCount   Int?
+
+  oneYearReturn         Float?
+  threeYearReturn       Float?
+  fiveYearReturn        Float?
+  sinceInceptionReturn  Float?
+
+  status   String  @default("draft")
+  featured Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  categories AssetManagerCategory[]
+}
+
+model AssetManagerCategory {
+  assetManagerId String
+  categoryId     String
+  assetManager   AssetManager @relation(fields: [assetManagerId], references: [id], onDelete: Cascade)
+  category       Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@id([assetManagerId, categoryId])
+}
