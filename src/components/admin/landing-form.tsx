@@ -61,11 +61,20 @@ export function LandingForm({ page }: { page?: LandingPage | null }) {
       };
 
       startTransition(async () => {
-        const response = await saveLandingPage(page?.id ?? null, payload, intent);
-        setResult(response);
-        if (response.ok) {
-          router.push("/admin/pages");
-          router.refresh();
+        try {
+          const response = await saveLandingPage(page?.id ?? null, payload, intent);
+          setResult(response);
+          if (response.ok) {
+            router.push("/admin/pages");
+            router.refresh();
+          }
+        } catch (error) {
+          console.error(error);
+          setResult({
+            ok: false,
+            error:
+              "Could not reach the server. Disable ad-block / request-blocking extensions for localhost, then try again.",
+          });
         }
       });
     };
