@@ -17,10 +17,10 @@ import { faqsFromText, sectionsFromText } from "@/lib/content-format";
 
 export type { ActionResult };
 
-async function requireAdmin() {
+async function requireAdmin(): Promise<ActionResult | null> {
   const session = await getSession();
-  if (!session) throw new Error("Unauthorized");
-  return session;
+  if (!session) return { ok: false, error: "Session expired. Please sign in again." };
+  return null;
 }
 
 function emptyToNull(value?: string | null) {
@@ -39,7 +39,9 @@ export async function saveBlogPost(
   raw: unknown,
   intent: "draft" | "publish"
 ): Promise<ActionResult> {
-  await requireAdmin();
+  const authError = await requireAdmin();
+  if (authError) return authError;
+
   const parsed = (intent === "publish" ? blogPublishSchema : blogFormSchema).safeParse(raw);
   if (!parsed.success) {
     const fieldErrors: Record<string, string> = {};
@@ -99,7 +101,8 @@ export async function saveBlogPost(
 }
 
 export async function deleteBlogPost(id: string) {
-  await requireAdmin();
+  const authError = await requireAdmin();
+  if (authError) return authError;
   const post = await db.blogPost.delete({ where: { id } });
   revalidatePath("/");
   revalidatePath("/blogs");
@@ -109,7 +112,8 @@ export async function deleteBlogPost(id: string) {
 }
 
 export async function setBlogStatus(id: string, status: "draft" | "published" | "archived") {
-  await requireAdmin();
+  const authError = await requireAdmin();
+  if (authError) return authError;
   const post = await db.blogPost.update({
     where: { id },
     data: {
@@ -120,6 +124,7 @@ export async function setBlogStatus(id: string, status: "draft" | "published" | 
   revalidatePath(`/blog/${post.slug}`);
   revalidatePath("/admin/blogs");
   revalidatePath("/");
+  return { ok: true };
 }
 
 export async function saveLandingPage(
@@ -127,7 +132,9 @@ export async function saveLandingPage(
   raw: unknown,
   intent: "draft" | "publish"
 ): Promise<ActionResult> {
-  await requireAdmin();
+  const authError = await requireAdmin();
+  if (authError) return authError;
+
   const parsed = (intent === "publish" ? landingPublishSchema : landingFormSchema).safeParse(raw);
   if (!parsed.success) {
     const fieldErrors: Record<string, string> = {};
@@ -187,7 +194,8 @@ export async function saveLandingPage(
 }
 
 export async function deleteLandingPage(id: string) {
-  await requireAdmin();
+  const authError = await requireAdmin();
+  if (authError) return authError;
   const page = await db.landingPage.delete({ where: { id } });
   revalidatePath(`/${page.slug}`);
   revalidatePath("/admin/pages");
@@ -195,44 +203,53 @@ export async function deleteLandingPage(id: string) {
 }
 
 export async function setLandingStatus(id: string, status: "draft" | "published" | "archived") {
-  await requireAdmin();
+  const authError = await requireAdmin();
+  if (authError) return authError;
   const page = await db.landingPage.update({ where: { id }, data: { status } });
   revalidatePath(`/${page.slug}`);
   revalidatePath("/admin/pages");
+  return { ok: true };
 }
 
 export async function saveSeoSettings(raw: unknown): Promise<ActionResult> {
-  await requireAdmin();
+  const authError = await requireAdmin();
+  if (authError) return authError;
+
   const parsed = seoSettingsSchema.safeParse(raw);
   if (!parsed.success) {
     return { ok: false, error: "Please correct the SEO fields." };
   }
   const data = parsed.data;
-  await db.seoSettings.upsert({
-    where: { id: "site" },
-    create: {
-      id: "site",
-      siteName: data.siteName,
-      defaultTitle: data.defaultTitle,
-      titleTemplate: data.titleTemplate,
-      defaultDescription: data.defaultDescription,
-      defaultOgImage: emptyToNull(data.defaultOgImage),
-      twitterHandle: emptyToNull(data.twitterHandle),
-      robotsIndex: data.robotsIndex,
-      googleVerification: emptyToNull(data.googleVerification),
-    },
-    update: {
-      siteName: data.siteName,
-      defaultTitle: data.defaultTitle,
-      titleTemplate: data.titleTemplate,
-      defaultDescription: data.defaultDescription,
-      defaultOgImage: emptyToNull(data.defaultOgImage),
-      twitterHandle: emptyToNull(data.twitterHandle),
-      robotsIndex: data.robotsIndex,
-      googleVerification: emptyToNull(data.googleVerification),
-    },
-  });
-  revalidatePath("/");
-  revalidatePath("/admin/seo");
-  return { ok: true };
+  try {
+    await db.seoSettings.upsert({
+      where: { id: "site" },
+      create: {
+        id: "site",
+        siteName: data.siteName,
+        defaultTitle: data.defaultTitle,
+        titleTemplate: data.titleTemplate,
+        defaultDescription: data.defaultDescription,
+        defaultOgImage: emptyToNull(data.defaultOgImage),
+        twitterHandle: emptyToNull(data.twitterHandle),
+        robotsIndex: data.robotsIndex,
+        googleVerification: emptyToNull(data.googleVerification),
+      },
+      update: {
+        siteName: data.siteName,
+        defaultTitle: data.defaultTitle,
+        titleTemplate: data.titleTemplate,
+        defaultDescription: data.defaultDescription,
+        defaultOgImage: emptyToNull(data.defaultOgImage),
+        twitterHandle: emptyToNull(data.twitterHandle),
+        robotsIndex: data.robotsIndex,
+        googleVerification: emptyToNull(data.googleVerification),
+      },
+    });
+    revalidatePath("/");
+    revalidatePath("/admin/seo");
+    return { ok: true };
+  } catch (e) {
+    console.error(e);
+    return { ok: false, error: "Could not save SEO settings." };
+  }
 }

@@ -55,23 +55,68 @@ h3 {
   .admin-label {
     @apply mb-1.5 block text-[10px] font-medium uppercase tracking-[0.14em] text-ink-500;
   }
+}
 
-  .admin-shell h1,
-  .admin-shell h2,
-  .admin-shell h3,
-  .admin-shell p,
-  .admin-shell a,
-  .admin-shell span,
-  .admin-shell label,
-  .admin-shell td,
-  .admin-shell th {
-    color: inherit;
-  }
+/* Admin panel — hard contrast so light text from the public theme never bleeds in */
+.admin-shell {
+  background: #f7f6f2 !important;
+  color: #0b0b0c !important;
+}
 
-  .admin-shell main {
-    color: #0b0b0c;
-  }
+.admin-shell aside {
+  background: #0b0b0c !important;
+  color: #f0efeb !important;
+}
 
+.admin-shell aside a {
+  color: rgba(240, 239, 235, 0.85) !important;
+}
+
+.admin-shell aside a[aria-current="page"],
+.admin-shell aside a.bg-white\/12,
+.admin-shell aside .admin-nav-active {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+.admin-shell header {
+  background: #ffffff !important;
+  color: #0b0b0c !important;
+  border-bottom: 1px solid rgba(11, 11, 12, 0.1);
+}
+
+.admin-shell main {
+  background: #f7f6f2 !important;
+  color: #0b0b0c !important;
+}
+
+.admin-shell main h1,
+.admin-shell main h2,
+.admin-shell main h3,
+.admin-shell main p,
+.admin-shell main a,
+.admin-shell main span,
+.admin-shell main td,
+.admin-shell main th,
+.admin-shell main label {
+  color: inherit;
+}
+
+.admin-shell main .text-ink-400,
+.admin-shell main .text-ink-500 {
+  color: #6e6a62 !important;
+}
+
+.admin-shell main .text-gold-dark {
+  color: #7d6b45 !important;
+}
+
+.admin-shell main .bg-white {
+  background: #ffffff !important;
+  color: #0b0b0c !important;
+}
+
+@layer components {
   .gold-btn {
     @apply inline-flex items-center justify-center bg-gold px-5 text-[11px] font-medium uppercase tracking-[0.16em] text-ink transition hover:bg-gold-light;
   }
@@ -81,7 +126,14 @@ h3 {
   }
 
   .widget-card {
-    @apply border border-white/[0.08] bg-white/[0.025] transition duration-300 hover:border-gold/25 hover:bg-white/[0.04];
+    @apply border transition duration-300;
+    border-color: rgb(255 255 255 / 0.08);
+    background-color: rgb(255 255 255 / 0.025);
+  }
+
+  .widget-card:hover {
+    border-color: rgb(168 146 98 / 0.25);
+    background-color: rgb(255 255 255 / 0.04);
   }
 
   .widget-float {
@@ -89,7 +141,8 @@ h3 {
   }
 
   .media-frame {
-    @apply relative overflow-hidden border border-white/[0.08] bg-ink-800;
+    @apply relative overflow-hidden border bg-ink-800;
+    border-color: rgb(255 255 255 / 0.08);
   }
 }
 

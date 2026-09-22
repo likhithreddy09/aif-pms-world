@@ -47,11 +47,20 @@ export function BlogForm({ post }: { post?: BlogPost | null }) {
       };
 
       startTransition(async () => {
-        const response = await saveBlogPost(post?.id ?? null, payload, intent);
-        setResult(response);
-        if (response.ok) {
-          router.push("/admin/blogs");
-          router.refresh();
+        try {
+          const response = await saveBlogPost(post?.id ?? null, payload, intent);
+          setResult(response);
+          if (response.ok) {
+            router.push("/admin/blogs");
+            router.refresh();
+          }
+        } catch (error) {
+          console.error(error);
+          setResult({
+            ok: false,
+            error:
+              "Could not reach the server. Disable ad-block / request-blocking extensions for localhost, then try again.",
+          });
         }
       });
     };
