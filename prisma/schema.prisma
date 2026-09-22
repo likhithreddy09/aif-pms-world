@@ -78,3 +78,61 @@ model AssetManagerCategory {
 
   @@id([assetManagerId, categoryId])
 }
+
+model BlogPost {
+  id              String    @id @default(cuid())
+  title           String
+  slug            String    @unique
+  excerpt         String    @default("")
+  body            String    @default("")
+  coverImageUrl   String?
+  kicker          String    @default("Article")
+  authorName      String?
+  status          String    @default("draft")
+  publishedAt     DateTime?
+  // SEO
+  metaTitle       String?
+  metaDescription String?
+  ogImageUrl      String?
+  canonicalUrl    String?
+  noIndex         Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+model LandingPage {
+  id              String   @id @default(cuid())
+  title           String
+  slug            String   @unique
+  eyebrow         String   @default("")
+  lead            String   @default("")
+  /// JSON: [{ heading: string, body: string }]
+  sectionsJson    String   @default("[]")
+  /// JSON: string[] widget keys
+  widgetsJson     String   @default("[]")
+  /// JSON: [{ q: string, a: string }]
+  faqsJson        String   @default("[]")
+  kind            String   @default("generic")
+  status          String   @default("draft")
+  // SEO
+  metaTitle       String?
+  metaDescription String?
+  ogImageUrl      String?
+  canonicalUrl    String?
+  noIndex         Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model SeoSettings {
+  id              String   @id @default("site")
+  siteName        String   @default("PMS AIF WORLD")
+  defaultTitle    String   @default("Best PMS & AIF Investment Services in India")
+  titleTemplate   String   @default("%s | PMS AIF WORLD")
+  defaultDescription String @default("India’s most trusted PMS & AIF platform. Analytics-backed quality investing for HNIs, UHNIs and NRIs.")
+  defaultOgImage  String?
+  twitterHandle   String?
+  robotsIndex     Boolean  @default(true)
+  googleVerification String?
+  updatedAt       DateTime @updatedAt
+}

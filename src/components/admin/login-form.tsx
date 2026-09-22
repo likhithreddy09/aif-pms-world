@@ -23,7 +23,7 @@ export function LoginForm({ nextPath }: { nextPath: string }) {
     <form action={action} className="space-y-4">
       <input type="hidden" name="next" value={nextPath} />
       <div>
-        <Label htmlFor="email" className="text-gold-muted">Email</Label>
+        <Label htmlFor="email" className="!text-gold-muted">Email</Label>
         <Input
           id="email"
           name="email"
@@ -31,16 +31,18 @@ export function LoginForm({ nextPath }: { nextPath: string }) {
           autoComplete="username"
           defaultValue="admin@pmsaifworld.com"
           required
+          className="border-white/20 bg-ink text-cream placeholder:text-cream/40"
         />
       </div>
       <div>
-        <Label htmlFor="password" className="text-gold-muted">Password</Label>
+        <Label htmlFor="password" className="!text-gold-muted">Password</Label>
         <Input
           id="password"
           name="password"
           type="password"
           autoComplete="current-password"
           required
+          className="border-white/20 bg-ink text-cream placeholder:text-cream/40"
         />
       </div>
       {error ? <p className="text-sm text-red-200">{error}</p> : null}

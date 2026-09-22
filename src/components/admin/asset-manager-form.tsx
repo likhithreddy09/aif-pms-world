@@ -162,7 +162,7 @@ export function AssetManagerForm({
       <section className="border border-ink/10 bg-white p-6">
         <h2 className="font-semibold text-2xl">Classification</h2>
         <div className="mt-6">
-          <p className="label-field">
+          <p className="admin-label">
             Type <span className="text-red-700">*</span>
           </p>
           <div className="flex flex-wrap gap-3">
@@ -181,7 +181,7 @@ export function AssetManagerForm({
           <FieldError message={errors.type} />
         </div>
         <div className="mt-6">
-          <p className="label-field">Categories</p>
+          <p className="admin-label">Categories</p>
           <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
             {categories.map((category) => (
               <label key={category.id} className="inline-flex items-center gap-2 text-sm">
@@ -213,7 +213,7 @@ export function AssetManagerForm({
             <select
               id="registrationType"
               name="registrationType"
-              className="input-field"
+              className="admin-input"
               defaultValue={manager?.registrationType ?? ""}
             >
               <option value="">Select</option>
@@ -283,7 +283,7 @@ export function AssetManagerForm({
             <select
               id="riskProfile"
               name="riskProfile"
-              className="input-field"
+              className="admin-input"
               defaultValue={manager?.riskProfile ?? ""}
             >
               <option value="">Select</option>
@@ -406,7 +406,7 @@ export function AssetManagerForm({
             <Label htmlFor="status">Status</Label>
             <select
               id="status"
-              className="input-field"
+              className="admin-input"
               value={status}
               onChange={(e) => setStatus(e.target.value)}
             >

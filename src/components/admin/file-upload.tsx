@@ -50,7 +50,7 @@ export function FileUpload({
 
   return (
     <div>
-      <p className="label-field">
+      <p className="admin-label">
         {label}
         {required ? <span className="ml-1 text-red-700">*</span> : null}
       </p>

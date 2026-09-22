@@ -1,39 +1,34 @@
+import { PageHero } from "@/components/lux/editorial";
+import { BookCallForm } from "@/components/lux/widgets";
+import { OFFICES, SITE } from "@/data/site";
+
+export const metadata = { title: "Contact" };
+
 export default function ContactPage() {
   return (
-    <div>
-      <section className="bg-ink py-16 text-cream">
-        <div className="container-page">
-          <p className="eyebrow text-gold">Contact</p>
-          <h1 className="mt-3 font-semibold text-4xl sm:text-5xl">Speak with the team</h1>
-        </div>
-      </section>
-      <section className="container-page grid gap-10 py-12 md:grid-cols-2">
-        <div className="space-y-3 text-sm leading-7 text-ink-600">
-          <p>
-            This is a demonstration contact page. In production, enquiries would be routed to PMS AIF
-            World specialists.
+    <div className="bg-ink text-cream">
+      <PageHero
+        eyebrow="Connect"
+        title="Speak with a specialist"
+        lead="Delhi, Mumbai, Bengaluru. A thirty-minute diagnostic of the book you already have — then a shortlist, not a catalogue."
+      />
+      <section className="container-page grid gap-12 py-16 lg:grid-cols-2">
+        <div className="space-y-8">
+          <p className="text-lg text-cream/70">
+            {SITE.email}
+            <br />
+            {SITE.phone}
           </p>
-          <p>Email: demo@pmsaifworld.test</p>
-          <p>Phone: +91 22 0000 0000</p>
+          <div className="grid gap-6">
+            {OFFICES.map((o) => (
+              <div key={o.city} className="widget-card p-5">
+                <p className="text-[10px] uppercase tracking-[0.2em] text-gold">{o.city}</p>
+                <p className="mt-2 text-sm text-cream/70">{o.address}</p>
+              </div>
+            ))}
+          </div>
         </div>
-        <form className="space-y-4 border border-ink/10 bg-white p-6">
-          <label>
-            <span className="label-field">Name</span>
-            <input className="input-field" name="name" required />
-          </label>
-          <label>
-            <span className="label-field">Email</span>
-            <input className="input-field" type="email" name="email" required />
-          </label>
-          <label>
-            <span className="label-field">Message</span>
-            <textarea className="input-field min-h-28" name="message" required />
-          </label>
-          <button type="submit" className="h-11 bg-ink px-5 text-sm text-cream">
-            Send message
-          </button>
-          <p className="text-xs text-ink-400">Demo form — submissions are not stored.</p>
-        </form>
+        <BookCallForm />
       </section>
     </div>
   );

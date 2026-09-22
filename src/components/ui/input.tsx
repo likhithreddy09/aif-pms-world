@@ -5,7 +5,7 @@ export const Input = React.forwardRef<
   HTMLInputElement,
   React.InputHTMLAttributes<HTMLInputElement>
 >(function Input({ className, ...props }, ref) {
-  return <input ref={ref} className={cn("input-field", className)} {...props} />;
+  return <input ref={ref} className={cn("admin-input", className)} {...props} />;
 });
 
 export const Textarea = React.forwardRef<
@@ -15,7 +15,7 @@ export const Textarea = React.forwardRef<
   return (
     <textarea
       ref={ref}
-      className={cn("input-field min-h-28 resize-y", className)}
+      className={cn("admin-input min-h-28 resize-y", className)}
       {...props}
     />
   );
@@ -28,7 +28,7 @@ export function Label({
   ...props
 }: React.LabelHTMLAttributes<HTMLLabelElement> & { required?: boolean }) {
   return (
-    <label className={cn("label-field", className)} {...props}>
+    <label className={cn("admin-label", className)} {...props}>
       {children}
       {required ? <span className="ml-1 text-red-700">*</span> : null}
     </label>

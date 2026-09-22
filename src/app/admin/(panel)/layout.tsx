@@ -10,5 +10,9 @@ export default async function AdminPanelLayout({
 }) {
   const session = await getSession();
   if (!session) redirect("/admin/login");
-  return <AdminShell user={session}>{children}</AdminShell>;
+  return (
+    <div className="min-h-screen bg-paper text-ink">
+      <AdminShell user={session}>{children}</AdminShell>
+    </div>
+  );
 }
