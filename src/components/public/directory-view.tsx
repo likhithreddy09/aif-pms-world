@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Search } from "lucide-react";
 import { AssetManagerCard } from "@/components/public/asset-manager-card";
-import { categoryNames, ManagerWithCategories } from "@/lib/queries";
+import { categoryNames, type ManagerWithCategories } from "@/lib/manager";
 import { SORT_OPTIONS } from "@/lib/constants";
 
 export function DirectoryView({

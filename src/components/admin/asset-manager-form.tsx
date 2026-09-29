@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { FieldError, Input, Label, Textarea } from "@/components/ui/input";
 import { REGISTRATION_TYPES, RISK_PROFILES } from "@/lib/constants";
 import { saveAssetManager, type ActionResult } from "@/lib/actions";
-import { ManagerWithCategories } from "@/lib/queries";
+import type { ManagerWithCategories } from "@/lib/manager";
 
 type Category = { id: string; name: string; slug: string };
 

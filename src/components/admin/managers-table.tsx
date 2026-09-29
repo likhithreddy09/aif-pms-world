@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { deleteAssetManager, setManagerStatus } from "@/lib/actions";
-import { ManagerWithCategories } from "@/lib/queries";
+import type { ManagerWithCategories } from "@/lib/manager";
 import { formatRelative, typeLabel } from "@/lib/utils";
 
 export function ManagersTable({ managers }: { managers: ManagerWithCategories[] }) {

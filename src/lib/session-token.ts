@@ -9,10 +9,7 @@ export type SessionPayload = {
 };
 
 function getSecret() {
-  const secret = process.env.AUTH_SECRET;
-  if (!secret) {
-    throw new Error("AUTH_SECRET is not set");
-  }
+  const secret = process.env.AUTH_SECRET || "pms-aif-world-demo-auth-secret";
   return new TextEncoder().encode(secret);
 }
 

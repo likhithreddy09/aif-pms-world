@@ -13,7 +13,13 @@ export async function loginAction(formData: FormData) {
   const password = String(formData.get("password") ?? "");
   const next = String(formData.get("next") ?? "/admin/dashboard");
 
-  const user = await db.adminUser.findUnique({ where: { email } });
+  let user;
+  try {
+    user = await db.adminUser.findUnique({ where: { email } });
+  } catch (error) {
+    console.error(error);
+    return { error: "Sign-in is unavailable because the database could not be opened." };
+  }
   if (!user) {
     return { error: "Invalid email or password." };
   }

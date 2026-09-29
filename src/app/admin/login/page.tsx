@@ -2,6 +2,8 @@ import { LoginForm } from "@/components/admin/login-form";
 import { BrandLogo } from "@/components/lux/brand-logo";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 export default function AdminLoginPage({
   searchParams,
 }: {

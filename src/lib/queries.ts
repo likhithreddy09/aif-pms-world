@@ -1,17 +1,8 @@
 import { Prisma } from "@prisma/client";
 import { db } from "@/lib/db";
+import { managerInclude } from "@/lib/manager";
 
-const managerInclude = {
-  categories: { include: { category: true } },
-} satisfies Prisma.AssetManagerInclude;
-
-export type ManagerWithCategories = Prisma.AssetManagerGetPayload<{
-  include: typeof managerInclude;
-}>;
-
-export function categoryNames(manager: ManagerWithCategories) {
-  return manager.categories.map((item) => item.category.name);
-}
+export { categoryNames, type ManagerWithCategories } from "@/lib/manager";
 
 export async function getPublishedManagers(filters?: {
   type?: "PMS" | "AIF" | "BOTH";
