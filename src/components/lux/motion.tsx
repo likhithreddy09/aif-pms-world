@@ -1,14 +1,23 @@
 "use client";
 
 import { ReactNode, useEffect, useRef, useState } from "react";
-import { motion, useInView, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  useInView,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  AnimatePresence,
+} from "framer-motion";
 import { cn } from "@/lib/utils";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 export function Reveal({
   children,
   className,
   delay = 0,
-  y = 16,
+  y = 28,
 }: {
   children: ReactNode;
   className?: string;
@@ -16,14 +25,13 @@ export function Reveal({
   y?: number;
 }) {
   const reduce = useReducedMotion();
-  // Never hide content with opacity:0 — only a soft lift after mount
   return (
     <motion.div
       className={className}
-      initial={reduce ? false : { y, opacity: 1 }}
+      initial={reduce ? false : { y, opacity: 0.55 }}
       whileInView={reduce ? undefined : { y: 0, opacity: 1 }}
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, amount: 0.18, margin: "0px 0px -40px 0px" }}
+      transition={{ duration: 0.7, delay, ease: EASE }}
     >
       {children}
     </motion.div>
@@ -33,7 +41,7 @@ export function Reveal({
 export function Stagger({
   children,
   className,
-  delay = 0.07,
+  delay = 0.08,
 }: {
   children: ReactNode;
   className?: string;
@@ -45,10 +53,10 @@ export function Stagger({
       className={className}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, amount: 0.15 }}
+      viewport={{ once: true, amount: 0.12, margin: "0px 0px -30px 0px" }}
       variants={{
         hidden: {},
-        show: { transition: { staggerChildren: reduce ? 0 : delay } },
+        show: { transition: { staggerChildren: reduce ? 0 : delay, delayChildren: reduce ? 0 : 0.05 } },
       }}
     >
       {children}
@@ -62,14 +70,49 @@ export function StaggerItem({ children, className }: { children: ReactNode; clas
     <motion.div
       className={className}
       variants={{
-        // Stay visible even before "show" — only nudge upward
-        hidden: reduce ? { opacity: 1, y: 0 } : { opacity: 1, y: 12 },
+        hidden: reduce ? { opacity: 1, y: 0 } : { opacity: 0.5, y: 22 },
         show: {
           opacity: 1,
           y: 0,
-          transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+          transition: { duration: 0.55, ease: EASE },
         },
       }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+/** Soft page enter — wrap page roots */
+export function PageEnter({ children, className }: { children: ReactNode; className?: string }) {
+  const reduce = useReducedMotion();
+  return (
+    <motion.div
+      className={className}
+      initial={reduce ? false : { opacity: 0.7, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.45, ease: EASE }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export function HoverLift({
+  children,
+  className,
+  y = -4,
+}: {
+  children: ReactNode;
+  className?: string;
+  y?: number;
+}) {
+  const reduce = useReducedMotion();
+  return (
+    <motion.div
+      className={className}
+      whileHover={reduce ? undefined : { y, transition: { duration: 0.25, ease: EASE } }}
+      transition={{ duration: 0.25 }}
     >
       {children}
     </motion.div>
@@ -80,10 +123,10 @@ export function GoldField() {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
       <div className="absolute inset-0 bg-mesh" />
-      <div className="absolute inset-0 bg-soft-lines opacity-40" />
-      <div className="absolute -left-20 top-24 h-72 w-72 rounded-full bg-gold/10 blur-3xl animate-drift" />
-      <div className="absolute -right-16 bottom-32 h-80 w-80 rounded-full bg-gold/[0.07] blur-3xl animate-drift-slow" />
-      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ink to-transparent" />
+      <div className="absolute inset-0 bg-soft-lines opacity-30" />
+      <div className="absolute -left-24 top-20 h-72 w-72 rounded-full bg-gold/10 blur-3xl animate-drift" />
+      <div className="absolute -right-20 bottom-24 h-80 w-80 rounded-full bg-gold/[0.07] blur-3xl animate-drift-slow" />
+      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#0f0e0c] to-transparent" />
     </div>
   );
 }
@@ -142,7 +185,6 @@ export function CountUp({
     return () => cancelAnimationFrame(raf);
   }, [inView, value]);
 
-  // Show final value before JS mounts so SSR/hydration never looks empty
   const display = mounted ? n : value;
 
   return (

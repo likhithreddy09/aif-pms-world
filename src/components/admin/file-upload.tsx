@@ -33,9 +33,18 @@ export function FileUpload({
       form.set("file", file);
       form.set("kind", kind === "document" ? "document" : "logo");
       const res = await fetch("/api/upload", { method: "POST", body: form });
-      const data = await res.json();
+      let data: { url?: string; error?: string } = {};
+      try {
+        data = await res.json();
+      } catch {
+        data = {};
+      }
       if (!res.ok) {
-        setLocalError(data.error || "Unable to upload file. Please try again.");
+        setLocalError(data.error || `Upload failed (${res.status}). Please try again.`);
+        return;
+      }
+      if (!data.url) {
+        setLocalError("Upload succeeded but no file URL was returned.");
         return;
       }
       onChange(data.url);

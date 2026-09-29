@@ -299,20 +299,22 @@ export function ProductBrowser({
 export function ProductTile({ product, delay = 0 }: { product: Product; delay?: number }) {
   return (
     <Reveal delay={delay}>
-      <Link
-        href={`/portfolio/${product.slug}`}
-        className="group block border border-gold/20 bg-ink-800/40 p-4 transition hover:border-gold/60 hover:bg-ink-700/50"
-      >
-        <div className="flex items-center justify-between gap-3">
-          <span className="text-[10px] uppercase tracking-[0.18em] text-gold">{product.kind}</span>
-          <span className="text-[10px] uppercase tracking-[0.14em] text-cream/40">{product.category}</span>
-        </div>
-        <p className="mt-3 font-medium leading-snug text-cream group-hover:text-gold">{product.name}</p>
-        <div className="mt-4 flex items-center justify-between text-[11px] text-cream/50">
-          <span>{product.style}</span>
-          <span>Q{product.q} · R{product.r} · C{product.c}</span>
-        </div>
-      </Link>
+      <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}>
+        <Link
+          href={`/portfolio/${product.slug}`}
+          className="group block border border-gold/20 bg-[#141312]/60 p-4 transition duration-300 hover:border-gold/60 hover:bg-[#1f1b14]/90 hover:shadow-[0_12px_40px_rgba(168,146,98,0.08)]"
+        >
+          <div className="flex items-center justify-between gap-3">
+            <span className="text-[10px] uppercase tracking-[0.18em] text-gold">{product.kind}</span>
+            <span className="text-[10px] uppercase tracking-[0.14em] text-cream/40">{product.category}</span>
+          </div>
+          <p className="mt-3 font-medium leading-snug text-cream transition group-hover:text-gold">{product.name}</p>
+          <div className="mt-4 flex items-center justify-between text-[11px] text-cream/50">
+            <span>{product.style}</span>
+            <span>Q{product.q} · R{product.r} · C{product.c}</span>
+          </div>
+        </Link>
+      </motion.div>
     </Reveal>
   );
 }
@@ -423,20 +425,62 @@ export function Voices() {
 }
 
 export function TeamGrid() {
+  const founder = TEAM.find((m) => m.slug === "kamal-manocha") ?? TEAM[0];
+  const rest = TEAM.filter((m) => m.slug !== founder.slug);
+
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {TEAM.map((m, i) => (
-        <Reveal key={m.slug} delay={i * 0.04}>
-          <Link href={`/team-member/${m.slug}`} className="widget-card block p-6 hover:border-gold/50">
-            <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-gold/40 text-lg font-semibold text-gold">
-              {m.name.split(" ").map((n) => n[0]).slice(0, 2).join("")}
+    <div className="space-y-6">
+      <Reveal>
+        <Link
+          href={`/team-member/${founder.slug}`}
+          className="group relative block overflow-hidden border border-gold/35 bg-[#141312] transition-colors hover:border-gold/55"
+        >
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_15%_20%,rgba(168,146,98,0.14),transparent_55%)]" />
+          <div className="relative grid gap-6 p-6 sm:p-8 lg:grid-cols-[220px_1fr] lg:items-center lg:gap-10 lg:p-10">
+            <div className="relative mx-auto h-44 w-44 overflow-hidden border border-gold/40 sm:h-52 sm:w-52 lg:mx-0">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={founder.image}
+                alt={founder.name}
+                className="h-full w-full object-cover object-[center_12%] transition-transform duration-500 group-hover:scale-[1.03]"
+              />
             </div>
-            <p className="text-[10px] uppercase tracking-[0.2em] text-gold">{m.role}</p>
-            <h3 className="mt-2 text-xl font-semibold text-cream">{m.name}</h3>
-            <p className="mt-3 text-sm leading-relaxed text-cream/60">{m.quote}</p>
-          </Link>
-        </Reveal>
-      ))}
+            <div className="text-center lg:text-left">
+              <p className="text-[10px] uppercase tracking-[0.28em] text-gold">Leadership</p>
+              <p className="mt-2 text-[10px] uppercase tracking-[0.2em] text-gold/70">{founder.role}</p>
+              <h3 className="mt-3 font-display text-3xl font-semibold tracking-tight text-cream sm:text-4xl lg:text-[2.75rem]">
+                {founder.name}
+              </h3>
+              <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-cream/70 sm:text-lg lg:mx-0">
+                {founder.quote}
+              </p>
+              <p className="mt-6 text-[11px] uppercase tracking-[0.18em] text-gold/80 transition-colors group-hover:text-gold">
+                Meet the founder →
+              </p>
+            </div>
+          </div>
+        </Link>
+      </Reveal>
+
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {rest.map((m, i) => (
+          <Reveal key={m.slug} delay={i * 0.04}>
+            <Link href={`/team-member/${m.slug}`} className="widget-card block p-6 hover:border-gold/50">
+              <div className="relative mb-5 h-20 w-20 overflow-hidden rounded-full border border-gold/35">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={m.image}
+                  alt={m.name}
+                  className="h-full w-full object-cover object-[center_15%]"
+                />
+              </div>
+              <p className="text-[10px] uppercase tracking-[0.2em] text-gold">{m.role}</p>
+              <h3 className="mt-2 text-xl font-semibold text-cream">{m.name}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-cream/60">{m.quote}</p>
+            </Link>
+          </Reveal>
+        ))}
+      </div>
     </div>
   );
 }

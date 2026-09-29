@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BrandLogo } from "@/components/lux/brand-logo";
 import { FOOTER, OFFICES, SITE } from "@/data/site";
 
 export function SiteFooter() {
@@ -6,10 +7,8 @@ export function SiteFooter() {
     <footer className="border-t border-gold/20 bg-ink text-cream">
       <div className="container-page grid gap-12 py-16 lg:grid-cols-4">
         <div>
-          <p className="text-2xl font-semibold tracking-tight">
-            PMS AIF <span className="text-gold">WORLD</span>
-          </p>
-          <p className="mt-4 max-w-sm text-sm leading-relaxed text-cream/60">
+          <BrandLogo height={48} className="max-w-[240px]" />
+          <p className="mt-5 max-w-sm text-sm leading-relaxed text-cream/60">
             A new-age investment services company. Analytics-backed, high-quality investing for wealth creation —
             listed to unlisted, PMS to AIF, pre-IPO to private credit.
           </p>

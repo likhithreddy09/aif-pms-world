@@ -1,5 +1,20 @@
 export type WidgetKey =
-  | "stats" | "fivep" | "qrc" | "products" | "faq" | "team" | "events" | "news" | "tools" | "voices" | "marquee" | "awards";
+  | "stats"
+  | "fivep"
+  | "orbit"
+  | "qrc"
+  | "products"
+  | "faq"
+  | "team"
+  | "events"
+  | "news"
+  | "tools"
+  | "voices"
+  | "marquee"
+  | "awards"
+  | "blog"
+  | "compare"
+  | "form";
 
 export type EditorialPage = {
   slug: string;
@@ -1115,23 +1130,19 @@ export const PAGES: EditorialPage[] = [
   {
     slug: "team-member/kamal-manocha",
     title: "Kamal Manocha",
-    eyebrow: "Team",
-    lead: "Operators, researchers and client principals who sit between the allocator and the fund manager.",
+    eyebrow: "Founder & CEO",
+    lead: "We will disrupt Investment Services Industry with our super quality content and analysis backed informed investing approach.",
     kind: "team",
-    sections: [
-      { heading: "How the desk works", body: "Research scores the universe. Client principals translate that into a portfolio that fits the household. Operations keeps statements, rebalances and reviews on cadence." },
-    ],
+    sections: [],
     widgets: ["team", "voices"],
   },
   {
     slug: "team-member/ritika-farma",
     title: "Ritika Farma",
-    eyebrow: "Team",
-    lead: "Operators, researchers and client principals who sit between the allocator and the fund manager.",
+    eyebrow: "Director & EVP",
+    lead: "In investments, best Returns are not made by making best purchases, rather by way of informed investment decisions.",
     kind: "team",
-    sections: [
-      { heading: "How the desk works", body: "Research scores the universe. Client principals translate that into a portfolio that fits the household. Operations keeps statements, rebalances and reviews on cadence." },
-    ],
+    sections: [],
     widgets: ["team", "voices"],
   },
   {

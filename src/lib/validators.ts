@@ -77,7 +77,7 @@ export const blogPublishSchema = blogFormSchema.extend({
 export type BlogFormValues = z.infer<typeof blogFormSchema>;
 
 export const landingFormSchema = z.object({
-  title: z.string().trim().min(3, "Title is required."),
+  title: z.string().trim().min(3, "Title is required (at least 3 characters)."),
   slug: z.string().trim().min(2, "Slug is required."),
   eyebrow: z.string().trim().default(""),
   lead: z.string().trim().default(""),
@@ -89,12 +89,22 @@ export const landingFormSchema = z.object({
   metaTitle: z.string().trim().optional(),
   metaDescription: z.string().trim().optional(),
   ogImageUrl: z.string().optional(),
-  canonicalUrl: z.string().trim().optional(),
+  canonicalUrl: z
+    .string()
+    .trim()
+    .optional()
+    .refine(
+      (v) => !v || /^https?:\/\/.+/i.test(v),
+      "Canonical URL must start with http:// or https://"
+    ),
   noIndex: z.boolean().default(false),
 });
 
 export const landingPublishSchema = landingFormSchema.extend({
-  lead: z.string().trim().min(20, "Lead is required for publish."),
+  lead: z
+    .string()
+    .trim()
+    .min(20, "Lead must be at least 20 characters to publish."),
 });
 
 export type LandingFormValues = z.infer<typeof landingFormSchema>;

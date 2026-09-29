@@ -5,7 +5,7 @@ import { FloatingDock } from "@/components/lux/dock";
 
 export default function SiteLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex min-h-screen flex-col bg-ink text-cream">
+    <div className="flex min-h-screen flex-col bg-[#0f0e0c] text-cream">
       <SiteHeader />
       <main className="flex-1">{children}</main>
       <SiteFooter />

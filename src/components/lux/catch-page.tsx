@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { EditorialView } from "@/components/lux/editorial";
+import { EditorialView } from "@/components/lux/editorial-view";
 import { getPage, type EditorialPage } from "@/data/pages";
 import { TEAM } from "@/data/site";
 import { getPublicLanding } from "@/lib/content-queries";
@@ -21,11 +21,24 @@ export function resolveEditorial(slug: string): EditorialPage | undefined {
       eyebrow: member.role,
       lead: member.quote,
       kind: "team",
-      sections: [{ heading: "The desk", body: member.bio }],
+      sections: [],
       widgets: ["team", "voices"],
     };
   }
   return undefined;
+}
+
+function toViewPage(page: EditorialPage): EditorialPage {
+  return {
+    slug: page.slug,
+    title: page.title,
+    eyebrow: page.eyebrow ?? "",
+    lead: page.lead ?? "",
+    kind: page.kind ?? "generic",
+    sections: Array.isArray(page.sections) ? page.sections : [],
+    widgets: Array.isArray(page.widgets) ? page.widgets : [],
+    faqs: Array.isArray(page.faqs) ? page.faqs : [],
+  };
 }
 
 export async function catchMetadata(slug: string): Promise<Metadata> {
@@ -51,9 +64,9 @@ export async function catchMetadata(slug: string): Promise<Metadata> {
 export async function CatchPage({ slug }: { slug: string }) {
   const dbPage = await getPublicLanding(slug);
   if (dbPage?.source === "db") {
-    return <EditorialView page={dbPage} />;
+    return <EditorialView page={toViewPage(dbPage)} />;
   }
   const page = resolveEditorial(slug);
   if (!page) notFound();
-  return <EditorialView page={page} />;
+  return <EditorialView page={toViewPage(page)} />;
 }

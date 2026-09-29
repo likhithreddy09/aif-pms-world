@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { Menu, Search, X, ChevronDown } from "lucide-react";
+import { BrandLogo } from "@/components/lux/brand-logo";
 import { NAV, SITE } from "@/data/site";
 import { searchProducts } from "@/data/catalog";
 import { PAGES } from "@/data/pages";
@@ -47,7 +48,9 @@ export function SiteHeader() {
     <header
       className={cn(
         "sticky top-0 z-50 border-b transition-colors",
-        scrolled ? "border-gold/20 bg-ink/95 backdrop-blur-xl" : "border-transparent bg-ink"
+        scrolled
+          ? "border-gold/20 bg-[#0f0e0c]/95 backdrop-blur-xl"
+          : "border-transparent bg-[#0f0e0c]"
       )}
     >
       <div className="container-page flex items-center justify-end gap-2 py-2">
@@ -58,15 +61,8 @@ export function SiteHeader() {
           Book a Call
         </Link>
       </div>
-      <div className="container-page flex items-center justify-between gap-6 pb-4">
-        <Link href="/" className="shrink-0 whitespace-nowrap">
-          <span className="block text-[22px] font-semibold leading-none tracking-tight text-cream sm:text-[24px]">
-            PMS AIF <span className="text-gold">WORLD</span>
-          </span>
-          <span className="mt-1.5 block text-[9px] font-medium uppercase tracking-[0.22em] text-cream/45">
-            Analytics-backed investing
-          </span>
-        </Link>
+      <div className="container-page flex items-center justify-between gap-6 pb-3 pt-1">
+        <BrandLogo priority height={42} className="max-w-[min(52vw,220px)] sm:max-w-[260px]" />
         <nav className="hidden items-center gap-0.5 lg:flex">
           {NAV.map((item) => (
             <div key={item.label} className="group relative">
@@ -109,7 +105,7 @@ export function SiteHeader() {
         </button>
       </div>
       {searchOpen ? (
-        <div className="border-t border-gold/15 bg-ink-800">
+        <div className="border-t border-white/10 bg-ink-800">
           <form onSubmit={onSearch} className="container-page py-4">
             <input
               autoFocus
@@ -134,7 +130,7 @@ export function SiteHeader() {
         </div>
       ) : null}
       {open ? (
-        <div className="max-h-[80vh] overflow-y-auto border-t border-gold/15 bg-ink-800 lg:hidden">
+        <div className="max-h-[80vh] overflow-y-auto border-t border-white/10 bg-ink-800 lg:hidden">
           <div className="container-page py-4">
             {NAV.map((item) => (
               <div key={item.label} className="border-b border-gold/10 py-3">

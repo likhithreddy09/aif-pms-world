@@ -13,6 +13,20 @@ html {
   scroll-behavior: smooth;
 }
 
+::selection {
+  background: rgba(168, 146, 98, 0.28);
+  color: #f0efeb;
+}
+
+a,
+button {
+  transition: color 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
@@ -122,7 +136,7 @@ h3 {
   }
 
   .gold-btn-ghost {
-    @apply inline-flex items-center justify-center border border-white/25 px-5 text-[11px] font-medium uppercase tracking-[0.16em] text-cream transition hover:border-gold hover:text-gold;
+    @apply inline-flex items-center justify-center border border-white/20 px-5 text-[11px] font-medium uppercase tracking-[0.16em] text-cream/85 transition hover:border-gold/50 hover:text-gold;
   }
 
   .widget-card {
@@ -132,8 +146,9 @@ h3 {
   }
 
   .widget-card:hover {
-    border-color: rgb(168 146 98 / 0.25);
+    border-color: rgb(168 146 98 / 0.28);
     background-color: rgb(255 255 255 / 0.04);
+    transform: translateY(-2px);
   }
 
   .widget-float {
@@ -153,9 +168,9 @@ h3 {
 
   .bg-mesh {
     background:
-      radial-gradient(ellipse 70% 45% at 50% -8%, rgba(168, 146, 98, 0.12), transparent 55%),
-      radial-gradient(ellipse 40% 35% at 100% 15%, rgba(60, 55, 45, 0.28), transparent 50%),
-      linear-gradient(180deg, #0b0b0c 0%, #121110 45%, #0b0b0c 100%);
+      radial-gradient(ellipse 70% 45% at 50% -8%, rgba(168, 146, 98, 0.11), transparent 55%),
+      radial-gradient(ellipse 40% 35% at 100% 18%, rgba(168, 146, 98, 0.05), transparent 50%),
+      linear-gradient(180deg, #121110 0%, #161513 45%, #0f0e0c 100%);
   }
 
   .bg-soft-lines {

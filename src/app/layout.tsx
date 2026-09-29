@@ -21,6 +21,10 @@ export const metadata: Metadata = {
     description:
       "Creating real stories of wealth creation through alpha-focused investments.",
     type: "website",
+    images: [{ url: "/brand/pmslogo.png" }],
+  },
+  icons: {
+    icon: "/brand/pmslogo.png",
   },
 };
 

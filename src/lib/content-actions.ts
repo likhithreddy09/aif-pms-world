@@ -101,8 +101,8 @@ export async function saveBlogPost(
 }
 
 export async function deleteBlogPost(id: string) {
-  const authError = await requireAdmin();
-  if (authError) return authError;
+  const session = await getSession();
+  if (!session) redirect("/admin/login");
   const post = await db.blogPost.delete({ where: { id } });
   revalidatePath("/");
   revalidatePath("/blogs");
@@ -158,7 +158,7 @@ export async function saveLandingPage(
     const faqs = faqsFromText(data.faqsText);
     const widgets = data.widgets
       .split(",")
-      .map((w) => w.trim())
+      .map((w) => w.trim().toLowerCase())
       .filter(Boolean);
 
     const payload = {
@@ -194,8 +194,8 @@ export async function saveLandingPage(
 }
 
 export async function deleteLandingPage(id: string) {
-  const authError = await requireAdmin();
-  if (authError) return authError;
+  const session = await getSession();
+  if (!session) redirect("/admin/login");
   const page = await db.landingPage.delete({ where: { id } });
   revalidatePath(`/${page.slug}`);
   revalidatePath("/admin/pages");

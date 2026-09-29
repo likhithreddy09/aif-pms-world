@@ -15,6 +15,7 @@ import {
   Search,
 } from "lucide-react";
 import { logoutAction } from "@/lib/auth-actions";
+import { BrandLogo } from "@/components/lux/brand-logo";
 import { cn } from "@/lib/utils";
 
 const items = [
@@ -48,13 +49,8 @@ export function AdminShell({
           style={{ background: "#0b0b0c", color: "#f0efeb" }}
         >
           <div className="border-b border-white/10 px-5 py-5">
-            <p
-              className="text-[10px] font-medium uppercase tracking-[0.2em]"
-              style={{ color: "#cfc3a8" }}
-            >
-              PMS AIF World
-            </p>
-            <p className="mt-1 text-xl font-semibold" style={{ color: "#ffffff" }}>
+            <BrandLogo href="/" height={36} className="max-w-[180px]" />
+            <p className="mt-3 text-sm font-medium" style={{ color: "rgba(240,239,235,0.55)" }}>
               Admin
             </p>
           </div>

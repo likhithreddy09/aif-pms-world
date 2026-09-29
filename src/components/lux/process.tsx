@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { FIVE_P, SERVICES, SITE_IMAGES } from "@/data/site";
+import { FIVE_P, SERVICES, SITE_IMAGES, TEAM } from "@/data/site";
 import { Reveal, Stagger, StaggerItem } from "@/components/lux/motion";
 
 export function ServiceWidgets() {
@@ -43,50 +43,37 @@ export function ServiceWidgets() {
 }
 
 export function FounderWidgets() {
-  const people = [
-    {
-      img: SITE_IMAGES.kamal,
-      name: "Kamal Manocha",
-      role: "Founder and CEO",
-      quote:
-        "We are a new-age investment services company, committed to delivering an analytics-driven, high-quality investing experience. With us, you invest in the best.",
-    },
-    {
-      img: SITE_IMAGES.ritika,
-      name: "Ritika Farma",
-      role: "Director & EVP",
-      quote:
-        "Suitability over sales. We serve what your portfolio needs — even when it challenges your existing biases.",
-    },
-  ];
+  const people = TEAM.filter((m) => m.slug === "kamal-manocha" || m.slug === "ritika-farma");
 
   return (
     <Stagger className="grid gap-4 lg:grid-cols-2">
       {people.map((p) => (
         <StaggerItem key={p.name}>
-          <motion.article
-            className="widget-card p-5 sm:p-6"
-            whileHover={{ y: -3 }}
-            transition={{ duration: 0.25 }}
-          >
-            <div className="flex items-start gap-4 sm:gap-5">
-              <div className="relative h-28 w-28 shrink-0 overflow-hidden border border-gold/25 sm:h-36 sm:w-36">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={p.img}
-                  alt={p.name}
-                  className="h-full w-full object-cover object-[center_12%]"
-                />
+          <Link href={`/team-member/${p.slug}`} className="block">
+            <motion.article
+              className="widget-card p-5 sm:p-6"
+              whileHover={{ y: -3 }}
+              transition={{ duration: 0.25 }}
+            >
+              <div className="flex items-start gap-4 sm:gap-5">
+                <div className="relative h-28 w-28 shrink-0 overflow-hidden border border-gold/25 sm:h-36 sm:w-36">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={p.image}
+                    alt={p.name}
+                    className="h-full w-full object-cover object-[center_12%]"
+                  />
+                </div>
+                <div className="min-w-0 flex-1 pt-0.5">
+                  <p className="text-[10px] uppercase tracking-[0.18em] text-gold/75">{p.role}</p>
+                  <h3 className="mt-1.5 text-lg font-semibold leading-snug text-cream sm:text-xl">
+                    {p.name}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-cream/60">{p.quote}</p>
+                </div>
               </div>
-              <div className="min-w-0 flex-1 pt-0.5">
-                <p className="text-[10px] uppercase tracking-[0.18em] text-gold/75">{p.role}</p>
-                <h3 className="mt-1.5 text-lg font-semibold leading-snug text-cream sm:text-xl">
-                  {p.name}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-cream/60">“{p.quote}”</p>
-              </div>
-            </div>
-          </motion.article>
+            </motion.article>
+          </Link>
         </StaggerItem>
       ))}
     </Stagger>
@@ -127,7 +114,7 @@ export function OrbitWidget() {
         </Stagger>
       </div>
 
-      <div className="relative mx-auto hidden aspect-square w-full max-w-md lg:block">
+      <div className="relative mx-auto hidden aspect-square w-full max-w-sm lg:block">
         <motion.div
           className="absolute inset-[16%] rounded-full border border-gold/15"
           animate={{ rotate: 360 }}

@@ -1,6 +1,7 @@
 export const SITE = {
   name: "PMS AIF WORLD",
-  tagline: "Analytics Backed Quality Investing",
+  tagline: "High Performance Investing",
+  logo: "/brand/pmslogo.png",
   email: "contact@pmsaifworld.com",
   phone: "+91 85275 12552",
   phoneHref: "tel:+918527512552",
@@ -71,72 +72,88 @@ export const TEAM = [
     name: "Kamal Manocha",
     role: "Founder & CEO",
     quote:
-      "We will disrupt the investment services industry with super-quality content and an analysis-backed, informed investing approach.",
+      "We will disrupt Investment Services Industry with our super quality content and analysis backed informed investing approach.",
     bio: "Founder of PMS AIF WORLD. Kamal built the firm in 2018 around a simple refusal: do not sell what the client wants if the portfolio needs something else. He is the public face of Crystal Gazing and the architect of the 5P / QRC desks.",
+    image: "/team/kamal-manocha.jpg",
+  },
+  {
+    slug: "sumit-kumar",
+    name: "Sumit Kumar",
+    role: "Vice President - Fund Raising and Client Relations",
+    quote:
+      'Investing should be more like watching paint dry or watching grass grow. If you want excitement, take $800 and go to Las Vegas." — Paul Samuelson',
+    bio: "Owns institutional and UHNI coverage, making sure onboarding, documentation and the first ninety days of a mandate are as calm as the research that preceded them.",
+    image: "/team/sumit-kumar.png",
+  },
+  {
+    slug: "ashraf-hussain",
+    name: "Ashraf Hussain",
+    role: "Biz Dev Management",
+    quote: '"An investment in knowledge pays the best interest." — Benjamin Franklin',
+    bio: "Distribution partnerships and product access — the quiet work of getting the right PPM in front of the right family office.",
+    image: "/team/ashraf-hussain.png",
   },
   {
     slug: "ritika-farma",
     name: "Ritika Farma",
     role: "Director & EVP",
     quote:
-      "In investments, the best returns are not made by making the best purchases, but by making informed investment decisions.",
+      "In investments, best Returns are not made by making best purchases, rather by way of informed investment decisions.",
     bio: "Leads client principals and the suitability practice. Ritika is the person most families meet first — mapping risk, existing books and the biases that usually sit underneath both.",
-  },
-  {
-    slug: "sumit-kumar",
-    name: "Sumit Kumar",
-    role: "Vice President — Fund Raising & Client Relations",
-    quote: "Investing should be more like watching paint dry. If you want excitement, take eight hundred dollars to Las Vegas.",
-    bio: "Owns institutional and UHNI coverage, making sure onboarding, documentation and the first ninety days of a mandate are as calm as the research that preceded them.",
-  },
-  {
-    slug: "ashraf-hussain",
-    name: "Ashraf Hussain",
-    role: "Business Development",
-    quote: "An investment in knowledge pays the best interest.",
-    bio: "Distribution partnerships and product access — the quiet work of getting the right PPM in front of the right family office.",
+    image: "/team/ritika-farma.png",
   },
   {
     slug: "kavish-malakar",
     name: "Kavish Malakar",
     role: "Client Relations Manager",
-    quote: "Seek wealth, not money or status. Wealth is assets that earn while you sleep.",
+    quote:
+      '"Seek wealth, not money or status. Wealth is having assets that earn while you sleep." - Naval Ravikant',
     bio: "Day-to-day coverage for families who want a named person, not a ticket queue.",
+    image: "/team/kavish-malakar.jpg",
   },
   {
     slug: "deep-pant",
     name: "Deep Pant",
-    role: "AVP — Operations",
-    quote: "Operations and customer-relationship management are the backbones of modern businesses.",
+    role: "AVP",
+    quote:
+      "Operations Management and Customer Relationships Management are the backbones of modern businesses",
     bio: "Statements, rebalances, audit trails and the unglamorous machinery that keeps a multi-PMS household honest.",
+    image: "/team/deep-pant.jpg",
   },
   {
     slug: "avinash-singh",
     name: "Avinash Singh",
     role: "Product Manager",
-    quote: "Accurate analytics reduce investment complexity into opportunities you can actually underwrite.",
+    quote:
+      "Accurate analytics, astute research, and meticulous data management all contribute to wealth management by reducing investment complexity into readily apparent opportunities.",
     bio: "Owns the product universe, QRC scoring cadence and the monthly performance sheets.",
+    image: "/team/avinash-singh.jpeg",
   },
   {
     slug: "shubham-lakhera",
     name: "Shubham Lakhera",
-    role: "Assistant Manager — Operations & Client Services",
-    quote: "Don't look for the needle in the haystack. Just buy the haystack.",
+    role: "Assistant Manager - Operations & Client Services",
+    quote: '"Don\'t look for the needle in the haystack. Just buy the haystack!" — John Bogle',
     bio: "Client onboarding and service operations across PMS and AIF subscriptions.",
+    image: "/team/shubham-lakhera.png",
   },
   {
     slug: "pranjal-mishra",
     name: "Pranjal Mishra",
     role: "Tech Management",
-    quote: "Every once in a while, a new technology, an old problem and a big idea turn into an innovation.",
+    quote:
+      '"Every once in a while, a new technology, an old problem, and a big idea turn into an innovation" - Dean Kamen',
     bio: "Platform, data pipes and the internal tools the research desk actually uses.",
+    image: "/team/pranjal-mishra.png",
   },
   {
     slug: "harshit-sharma",
     name: "Harshit Sharma",
     role: "Operations Manager",
-    quote: "We are what we repeatedly do. Excellence, then, is not an act but a habit.",
+    quote:
+      '"we are what we repeatedly do.Excellence,then is not an Act, but a Habit." - Aristotle',
     bio: "Process discipline across reviews, reporting and partner coordination.",
+    image: "/team/harshit-sharma.png",
   },
 ];
 
@@ -181,8 +198,8 @@ export const WEBINARS = [
 
 export const SITE_IMAGES = {
   hero: `${MEDIA}/2016/10/hero-image.4fe6cc92.png`,
-  kamal: `${MEDIA}/Kamal-Manocha.webp`,
-  ritika: `${MEDIA}/Ritika-new-1.png`,
+  kamal: "/team/kamal-manocha.jpg",
+  ritika: "/team/ritika-farma.png",
   award: `${MEDIA}/BRAND-IMPACT-AWARD-5.webp`,
   awardAlt: `${MEDIA}/kamal-manoch-acolades-awards-2021-1_compressed.jpg`,
   event1: `${MEDIA}/PAW-TMC-1compressed.webp`,
@@ -193,6 +210,7 @@ export const SITE_IMAGES = {
   managers: `${MEDIA}/4-2-1.webp`,
   qrc: `${MEDIA}/What-are-PMS-Portfolio-Management-Services-Guide-for-Investors.png`,
   logo: `${MEDIA}/pmslogo.png`,
+  logoLocal: "/brand/pmslogo.png",
 };
 
 export const TESTIMONIALS = [
