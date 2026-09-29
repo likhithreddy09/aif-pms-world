@@ -31,12 +31,25 @@ function bodyToParagraphs(body: string) {
     .filter(Boolean);
 }
 
+async function readPublished<T>(fn: () => Promise<T>, fallback: T): Promise<T> {
+  try {
+    return await fn();
+  } catch (error) {
+    console.error("Database read failed; serving static content.", error);
+    return fallback;
+  }
+}
+
 export async function listPublicBlogs(limit = 24): Promise<PublicBlog[]> {
-  const posts = await db.blogPost.findMany({
-    where: { status: "published" },
-    orderBy: [{ publishedAt: "desc" }, { updatedAt: "desc" }],
-    take: limit,
-  });
+  const posts = await readPublished(
+    () =>
+      db.blogPost.findMany({
+        where: { status: "published" },
+        orderBy: [{ publishedAt: "desc" }, { updatedAt: "desc" }],
+        take: limit,
+      }),
+    []
+  );
 
   const fromDb: PublicBlog[] = posts.map((p) => ({
     id: p.id,
@@ -65,9 +78,13 @@ export async function listPublicBlogs(limit = 24): Promise<PublicBlog[]> {
 }
 
 export async function getPublicBlog(slug: string): Promise<PublicBlog | null> {
-  const post = await db.blogPost.findFirst({
-    where: { slug, status: "published" },
-  });
+  const post = await readPublished(
+    () =>
+      db.blogPost.findFirst({
+        where: { slug, status: "published" },
+      }),
+    null
+  );
   if (post) {
     return {
       id: post.id,
@@ -110,9 +127,13 @@ export type PublicLanding = EditorialPage & {
 };
 
 export async function getPublicLanding(slug: string): Promise<PublicLanding | null> {
-  const page = await db.landingPage.findFirst({
-    where: { slug, status: "published" },
-  });
+  const page = await readPublished(
+    () =>
+      db.landingPage.findFirst({
+        where: { slug, status: "published" },
+      }),
+    null
+  );
   if (page) {
     let sections: EditorialPage["sections"] = [];
     let widgets: EditorialPage["widgets"] = [];
